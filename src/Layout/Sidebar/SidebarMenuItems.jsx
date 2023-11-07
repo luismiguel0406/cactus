@@ -78,7 +78,7 @@ const SidebarMenuItems = ({ setMainMenu, sidebartoogle, setNavActive }) => {
                       }`}
                     onClick={() => toggletNavActive(menuItem)}
                   >
-                    {menuItem.icon !== undefined && <menuItem.icon />}
+                    {menuItem.icon !== undefined && <menuItem.icon/> }
 
                     <span>{t(menuItem.title)}</span>
 
