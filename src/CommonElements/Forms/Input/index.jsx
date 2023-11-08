@@ -15,7 +15,7 @@ const CustomInput = ({
   ...rest
 }) => {
   let messageRequired = messageError === ""
-  ? `${label} is required.`
+  ? `${label} es requerido.`
   : messageError
   return (
     <FormGroup>
@@ -25,6 +25,7 @@ const CustomInput = ({
           id={name}
           type={type}
           name={name}
+          style={errors[name]?.message ? { border: "1px solid red"}: { border: "1px solid green"}}
           className={`form-control ${className}`}
           {...rest}
           {...register(name, {

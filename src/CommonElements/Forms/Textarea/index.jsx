@@ -7,24 +7,31 @@ const CustomTextArea = ({
   rows,
   className = "",
   register,
+  isRequired = true,
   messageError = "",
   errors,
   ...rest
 }) => {
+  let messageRequired = messageError === ""
+  ? `${label} es requerido.`
+  : messageError
+
   return (
     <FormGroup>
       <Label htmlFor={name}>{label}</Label>
       <textarea
         id={name}
         name={name}
-        placeholder="Type a little description here"
+        placeholder="Escribe una pequeña descripcion aqui"
         className={`form-control ${className}`}
+        style={errors[name]?.message ? { border: "1px solid red"}: { border: "1px solid green"}}
         rows={rows}
         {...rest}
-        {...register(name, {
-          required:
-            messageError === "" ? `${label} is required.` : messageError,
-        })}
+       {...register(name, {
+            required: isRequired
+              ? messageRequired
+              : false,
+          })}
         />      
       <span className="text-danger">{errors[name]?.message}</span>
     </FormGroup>

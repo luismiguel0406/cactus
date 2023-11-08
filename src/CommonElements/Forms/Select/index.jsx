@@ -7,7 +7,7 @@ const CustomSelect = ({
   className = "",
   options,
   register,
-  messageError = "",
+  messageError = "Debes selecionar una opcion valida",
   errors,
   ...rest
 }) => {
@@ -18,11 +18,12 @@ const CustomSelect = ({
         id={name}
         name={name}
         className={`form-control ${className}`}
+        style={errors[name]?.message ? { border: "1px solid red"}: { border: "1px solid green"}}
         defaultValue="0"
-        {...register(name, { validate: (value) => value !== "0" })}
+        {...register(name, { validate: (value)=> value !== "0" || messageError })}
         {...rest}
       >
-        <option value="0">{"Select an option"}</option>
+        <option value="0">{"Selecciona una opcion"}</option>
         {options?.map((item, idx) => (
           <option key={idx} value={item?.value}>
             {item?.label}

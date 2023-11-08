@@ -1,16 +1,18 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Card, CardBody, Form, Col, Row } from "reactstrap";
+import { Form, Col, Row, CardFooter } from "reactstrap";
 import CustomInput from "CommonElements/Forms/Input";
 import CustomSelect from "CommonElements/Forms/Select";
 import CustomTextArea from "CommonElements/Forms/Textarea";
-import FooterCard from "CommonElements/Forms/Common/FooterCard";
+import ButtonsSubmitCancel from "CommonElements/Forms/Common/ButtonsSubmitCancel";
+
 
 const SupplierForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
   const onSubmit = (data) => {
@@ -59,8 +61,8 @@ const SupplierForm = () => {
               </Col>
               <Col sm="6" md="4" lg="3">
                 <CustomSelect
-                  label="Categoria"
-                  name="categoria"
+                  label="Tipo de servicio"
+                  name="tipoServicio"
                   options={[]}
                   register={register}
                   errors={errors}
@@ -71,12 +73,15 @@ const SupplierForm = () => {
                   label="Informacion adicional"
                   name="infoAdicional"
                   type="text"
+                  isRequired={false}
                   register={register}
                   errors={errors}
                 />
               </Col>
             </Row>  
-          <FooterCard className='text-end mb-3 mx-3'/>
+            <CardFooter className="text-end">
+              <ButtonsSubmitCancel reset={reset} />
+            </CardFooter>
         </Form>    
     </>
   );
