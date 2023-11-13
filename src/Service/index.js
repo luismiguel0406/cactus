@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const http = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'https://service-dev.asms.app/api',
+  baseURL: process.env.REACT_APP_API_URL,
   timeout: 10000,
   //headers: { "Access-Control-Allow-Origin": "*" },
   validateStatus: function (status) {
@@ -13,10 +13,13 @@ export const http = axios.create({
   },
 });
 
-export const getData = (url)=>{
-   
+export const getData = async(url)=>{
+   const response = await http.get(url);
+   const data = await response.data;
+   return data;
 }
 
 export const postData = ()=>{
+
 
 }

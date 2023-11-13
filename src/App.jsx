@@ -1,15 +1,23 @@
-import React from 'react';
-import Routers from './Route';
-import AnimationThemeProvider from './_helper/AnimationTheme/AnimationThemeProvider';
-import CustomizerProvider from './_helper/Customizer/CustomizerProvider';
+import React from "react";
+import Routers from "./Route";
+import AnimationThemeProvider from "./_helper/AnimationTheme/AnimationThemeProvider";
+import CustomizerProvider from "./_helper/Customizer/CustomizerProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+//create a client
+const queryClient = new QueryClient();
 const App = () => (
   <div className="App">
-    <CustomizerProvider>
-      <AnimationThemeProvider>
-        <Routers />
-      </AnimationThemeProvider>
-    </CustomizerProvider>
+    <QueryClientProvider client={queryClient}>
+      <CustomizerProvider>
+        <AnimationThemeProvider>
+          <Routers />
+        </AnimationThemeProvider>
+      </CustomizerProvider>
+    </QueryClientProvider>
+    <ToastContainer />
   </div>
 );
 

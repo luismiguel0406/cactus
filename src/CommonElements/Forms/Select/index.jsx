@@ -5,9 +5,9 @@ const CustomSelect = ({
   label,
   name,
   className = "",
-  options,
+  options=[],
   register,
-  messageError = "Debes selecionar una opcion valida",
+  messageError = "Debes selecionar una opción valida",
   errors,
   ...rest
 }) => {
@@ -23,7 +23,7 @@ const CustomSelect = ({
         {...register(name, { validate: (value)=> value !== "0" || messageError })}
         {...rest}
       >
-        <option value="0">{"Selecciona una opcion"}</option>
+        <option value="0">{"Selecciona una opción"}</option>
         {options?.map((item, idx) => (
           <option key={idx} value={item?.value}>
             {item?.label}

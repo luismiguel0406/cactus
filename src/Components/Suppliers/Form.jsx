@@ -5,6 +5,7 @@ import CustomInput from "CommonElements/Forms/Input";
 import CustomSelect from "CommonElements/Forms/Select";
 import CustomTextArea from "CommonElements/Forms/Textarea";
 import ButtonsSubmitCancel from "CommonElements/Forms/Common/ButtonsSubmitCancel";
+import { useDrop } from "hooks/useDrop";
 
 
 const SupplierForm = () => {
@@ -14,6 +15,11 @@ const SupplierForm = () => {
     formState: { errors },
     reset
   } = useForm();
+
+ const optionsSuppliers = useDrop('proveedores/tipoServicio');
+ const optionsTypeSupplier = useDrop('proveedores/tipoProveedor');
+ const optionsTypeDocument = useDrop('proveedores/tipoDocumento');
+ 
 
   const onSubmit = (data) => {
     console.log(data);
@@ -27,7 +33,7 @@ const SupplierForm = () => {
                 <CustomSelect
                   label="Tipo de proveedor"
                   name="tipoProveedor"
-                  options={[]}
+                  options={optionsTypeSupplier}
                   register={register}
                   errors={errors}
                 />
@@ -36,7 +42,7 @@ const SupplierForm = () => {
                 <CustomSelect
                   label="Tipo de documento"
                   name="tipoDocumento"
-                  options={[]}
+                  options={optionsTypeDocument}
                   register={register}
                   errors={errors}
                 />
@@ -63,7 +69,7 @@ const SupplierForm = () => {
                 <CustomSelect
                   label="Tipo de servicio"
                   name="tipoServicio"
-                  options={[]}
+                  options={optionsSuppliers}
                   register={register}
                   errors={errors}
                 />
