@@ -1,51 +1,84 @@
 import React from "react";
 import { FormGroup, Label, InputGroup } from "reactstrap";
+import InputMask from "react-input-mask";
+import { Controller } from "react-hook-form";
 
 const CustomInput = ({
   label,
   name,
   className = "",
-  type,
+  type = 'text',
   register,
+  control = null,
   messageError = "",
   iconClassName = "",
+  isMasked = false,
+  mask = "",
   onClick,
   errors,
   isRequired = true,
   ...rest
 }) => {
-  let messageRequired = messageError === ""
-  ? `${label} es requerido.`
-  : messageError
+  let messageRequired =
+    messageError === "" ? `${label} es requerido.` : messageError;
   return (
     <FormGroup>
       <Label htmlFor={name}>{label}</Label>
-      <InputGroup>
-        <input
-          id={name}
-          type={type}
-          name={name}
-          style={errors[name]?.message ? { border: "1px solid red"}: { border: "1px solid green"}}
-          className={`form-control ${className}`}
-          {...rest}
-          {...register(name, {
-            required: isRequired
-              ? messageRequired
-              : false,
-          })}
-        />
-        {iconClassName !== "" ? (
-          <button
-            className="btn btn-primary"
-            onClick={(e) => {
-              e.preventDefault();
-              onClick();
+      {!isMasked ? (
+        <InputGroup>
+          <input
+            id={name}
+            type={type}
+            name={name}
+            style={
+              errors[name]?.message
+                ? { border: "1px solid red" }
+                : { border: "1px solid green" }
+            }
+            className={`form-control ${className}`}
+            {...rest}
+            {...register(name, {
+              required: isRequired ? messageRequired : false,
+            })}
+          />
+          {iconClassName !== "" ? (
+            <button
+              className="btn btn-primary"
+              onClick={(e) => {
+                e.preventDefault();
+                onClick();
+              }}
+            >
+              <i className={iconClassName}></i>
+            </button>
+          ) : null}
+        </InputGroup>
+      ) : (
+        <InputGroup>
+          <Controller
+            name={name}
+            control={control}
+            rules={{
+              required: isRequired ? messageRequired : false,
             }}
-          >
-            <i className={iconClassName}></i>
-          </button>
-        ) : null}
-      </InputGroup>
+            render={({ field:{onChange} }) => (
+              <InputMask
+                name={name} 
+                mask={mask} 
+                alwaysShowMask
+                className={`form-control ${className}`}
+                style={
+                  errors[name]?.message
+                    ? { border: "1px solid red" }
+                    : { border: "1px solid green" }
+                }
+                onChange={onChange}
+              />
+            )}
+          />
+        </InputGroup>
+      )}
+
       <span className="text-danger">{errors[name]?.message}</span>
     </FormGroup>
   );

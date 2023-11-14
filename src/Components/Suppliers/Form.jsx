@@ -6,6 +6,7 @@ import CustomSelect from "CommonElements/Forms/Select";
 import CustomTextArea from "CommonElements/Forms/Textarea";
 import ButtonsSubmitCancel from "CommonElements/Forms/Common/ButtonsSubmitCancel";
 import { useDrop } from "hooks/useDrop";
+import { useState } from "react";
 
 
 const SupplierForm = () => {
@@ -13,16 +14,24 @@ const SupplierForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    control,
+    reset,
+    watch
   } = useForm();
+
 
  const optionsSuppliers = useDrop('proveedores/tipoServicio');
  const optionsTypeSupplier = useDrop('proveedores/tipoProveedor');
  const optionsTypeDocument = useDrop('proveedores/tipoDocumento');
- 
 
+ const typeDocument = watch('tipoDocumento');
+
+ let documentMask = '';
+ const currentItem = optionsTypeDocument?.filter(item=>item.value === Number(typeDocument));
+ if(currentItem) documentMask = currentItem[0]?.mask;
+ 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data)
   };
 
   return (
@@ -50,8 +59,10 @@ const SupplierForm = () => {
               <Col sm="6" md="4" lg="3">
                 <CustomInput
                   label="Documento"
-                  name="documento"
-                  type="text"
+                  name="documento"     
+                  isMasked
+                  mask={documentMask}
+                  control={control}
                   register={register}
                   errors={errors}
                 />
@@ -60,7 +71,6 @@ const SupplierForm = () => {
                 <CustomInput
                   label="Nombre / razón social"
                   name="nombre"
-                  type="text"
                   register={register}
                   errors={errors}
                 />
@@ -78,7 +88,6 @@ const SupplierForm = () => {
                 <CustomTextArea
                   label="Informacion adicional"
                   name="infoAdicional"
-                  type="text"
                   isRequired={false}
                   register={register}
                   errors={errors}

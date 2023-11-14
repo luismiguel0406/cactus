@@ -9,6 +9,7 @@ export const useDrop = (url) => {
   const options = data?.data?.map((item) => ({
     value: item.id,
     label: item.descripcion,
+    mask:  item?.mascara
   }));
   return options;
 

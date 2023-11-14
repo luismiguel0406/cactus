@@ -5,7 +5,7 @@ const CustomSelect = ({
   label,
   name,
   className = "",
-  options=[],
+  options = [],
   register,
   messageError = "Debes selecionar una opción valida",
   errors,
@@ -18,9 +18,15 @@ const CustomSelect = ({
         id={name}
         name={name}
         className={`form-control ${className}`}
-        style={errors[name]?.message ? { border: "1px solid red"}: { border: "1px solid green"}}
+        style={
+          errors[name]?.message
+            ? { border: "1px solid red" }
+            : { border: "1px solid green" }
+        }
         defaultValue="0"
-        {...register(name, { validate: (value)=> value !== "0" || messageError })}
+        {...register(name, {
+          validate: (value) => value !== "0" || messageError,
+        })}
         {...rest}
       >
         <option value="0">{"Selecciona una opción"}</option>
