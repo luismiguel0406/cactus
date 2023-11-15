@@ -12,11 +12,19 @@ export const MENUITEMS = [
     menutitle: "Transacciones",
     Items: [
       {
-        title: "Facturas por pagar",
+        title: "Cuentas por pagar",
         icon: DollarSign,
-        type: "link",
+        type: "sub",
         active: false,
-        path: "facturas-por-pagar",
+        children: [
+          {
+            title: "Facturas por pagar",
+            icon: DollarSign,
+            type: "exteral_link",
+            path: `facturas-por-pagar`,
+            active: false,
+          },
+        ],
       },
     ],
   },

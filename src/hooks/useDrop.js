@@ -5,8 +5,8 @@ export const useDrop = (url) => {
   const urlSplit = url.split('/');
   const key = urlSplit[1];
   
-  const data = useQuery({ queryKey:[key], queryFn: ()=>getData(url) });
-  const options = data?.data?.map((item) => ({
+  const {data} = useQuery({ queryKey:[key], queryFn: ()=>getData(url) });
+  const options = data?.map((item) => ({
     value: item.id,
     label: item.descripcion,
     mask:  item?.mascara
