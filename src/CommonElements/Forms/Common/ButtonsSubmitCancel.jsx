@@ -2,11 +2,10 @@ import React from "react";
 import { Button } from "reactstrap";
 
 const ButtonsSubmitCancel = ({ reset }) => {
-
   return (
     <>
       <Button color="primary" className="m-r-15" type="submit">
-        Submit
+        Guardar
       </Button>
       <Button
         color="light"
@@ -15,7 +14,7 @@ const ButtonsSubmitCancel = ({ reset }) => {
           e.preventDefault();
         }}
       >
-        Cancel
+        Cancelar
       </Button>
     </>
   );
