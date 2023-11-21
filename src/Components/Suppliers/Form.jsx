@@ -6,6 +6,8 @@ import CustomSelect from "CommonElements/Forms/Select";
 import CustomTextArea from "CommonElements/Forms/Textarea";
 import ButtonsSubmitCancel from "CommonElements/Forms/Common/ButtonsSubmitCancel";
 import { useDrop } from "hooks/useDrop";
+import { useMutation } from "@tanstack/react-query";
+import { postData } from "Service";
 
 const SupplierForm = () => {
   const {
@@ -21,8 +23,11 @@ const SupplierForm = () => {
   const optionsTypeSupplier = useDrop("proveedores/tipoProveedor");
   const optionsTypeDocument = useDrop("proveedores/tipoDocumento");
   const optionsBanks = useDrop("proveedores/entidadBancaria");
+  const mutation = useMutation((body) =>
+    postData("api/proveedores/proveedor", body)
+  );
 
-  const typeDocument = watch("tipoDocumento");
+  const typeDocument = watch("tipoDocumento", 1);
 
   let documentMask = "";
   const currentItem = optionsTypeDocument?.filter(
@@ -32,6 +37,10 @@ const SupplierForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    const { distrito, calle, sector, numeroEdificio } = data;
+    const direccion = { distrito, calle, sector, numeroEdificio };
+    const proveedor = { ...data, direccion };
+    mutation.mutate(proveedor);
   };
 
   return (
@@ -42,7 +51,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomSelect
               label="Tipo de proveedor"
-              name="tipoProveedor"
+              name="tipoProveedorId"
               options={optionsTypeSupplier}
               register={register}
               errors={errors}
@@ -51,7 +60,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomSelect
               label="Tipo de documento"
-              name="tipoDocumento"
+              name="tipoDocumentoId"
               options={optionsTypeDocument}
               register={register}
               errors={errors}
@@ -79,17 +88,8 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomSelect
               label="Tipo de servicio"
-              name="tipoServicio"
+              name="tipoServicioId"
               options={optionsSuppliers}
-              register={register}
-              errors={errors}
-            />
-          </Col>
-          <Col sm="6" md="4" lg="3">
-            <CustomTextArea
-              label="Informacion adicional"
-              name="infoAdicional"
-              isRequired={false}
               register={register}
               errors={errors}
             />
@@ -125,7 +125,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomInput
               label="Edif / Apto No"
-              name="calle"
+              name="numeroEdificio"
               register={register}
               errors={errors}
             />
@@ -167,6 +167,40 @@ const SupplierForm = () => {
             <CustomInput
               label="Número de cuenta"
               name="numeroCuenta"
+              register={register}
+              errors={errors}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="6" md="4" lg="3">
+            <CustomSelect
+              label="Entidad bancaria opcional"
+              name="entidadBancariaOpcional"
+              options={optionsBanks}
+              register={register}
+              errors={errors}
+              isRequired={false}
+            />
+          </Col>
+          <Col sm="6" md="4" lg="3">
+            <CustomInput
+              label="Número de cuenta opcional"
+              name="numeroCuentaOpcional"
+              register={register}
+              errors={errors}
+              isRequired={false}
+            />
+          </Col>
+        </Row>
+        <hr />
+        <h4>Información adicional</h4>
+        <Row>
+          <Col sm="12">
+            <CustomTextArea
+              label="Información adicional"
+              name="infoAdicional"
+              isRequired={false}
               register={register}
               errors={errors}
             />

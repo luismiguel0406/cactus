@@ -13,13 +13,12 @@ export const http = axios.create({
   },
 });
 
-export const getData = async(url)=>{
-   const response = await http.get(url);
-   const data = await response.data;
-   return data;
-}
+export const getData = async (url) => {
+  const response = await http.get(url);
+  const data = await response.data;
+  return data;
+};
 
-export const postData = ()=>{
-
-
-}
+export const postData = async (url, body) => {
+  await http.post(url, body);
+};

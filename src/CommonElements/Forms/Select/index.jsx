@@ -9,6 +9,7 @@ const CustomSelect = ({
   register,
   messageError = "Debes selecionar una opción valida",
   errors,
+  isRequired = true,
   ...rest
 }) => {
   return (
@@ -25,7 +26,9 @@ const CustomSelect = ({
         }
         defaultValue="0"
         {...register(name, {
-          validate: (value) => value !== "0" || messageError,
+          validate: isRequired
+            ? (value) => value !== "0" || messageError
+            : null,
         })}
         {...rest}
       >
