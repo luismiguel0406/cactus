@@ -46,7 +46,7 @@ const SupplierForm = () => {
   return (
     <>
       <Form className="form theme-form" onSubmit={handleSubmit(onSubmit)}>
-        <h4>Identificacion fiscal</h4>
+        <h4>Identificación fiscal</h4>
         <Row>
           <Col sm="6" md="4" lg="3">
             <CustomSelect
@@ -96,7 +96,7 @@ const SupplierForm = () => {
           </Col>
         </Row>
         <hr />
-        <h4>Informacion de contacto</h4>
+        <h4>Contacto</h4>
         <Row>
           <Col sm="6" md="4" lg="3">
             <CustomInput
