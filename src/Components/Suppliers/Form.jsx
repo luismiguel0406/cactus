@@ -22,12 +22,12 @@ const SupplierForm = () => {
   const optionsSuppliers = useDrop("proveedores/tipoServicio");
   const optionsTypeSupplier = useDrop("proveedores/tipoProveedor");
   const optionsTypeDocument = useDrop("proveedores/tipoDocumento");
-  const optionsBanks = useDrop("proveedores/entidadBancaria");
-  const mutation = useMutation((body) =>
-    postData("api/proveedores/proveedor", body)
-  );
+  const optionsBanks = useDrop("proveedores/banco");
+  const mutation = useMutation({
+    mutationFn: (body) => postData("proveedores/proveedor", body),
+  });
 
-  const typeDocument = watch("tipoDocumento", 1);
+  const typeDocument = watch("typeDocumentId", 1);
 
   let documentMask = "";
   const currentItem = optionsTypeDocument?.filter(
@@ -36,13 +36,33 @@ const SupplierForm = () => {
   if (currentItem) documentMask = currentItem[0]?.mask;
 
   const onSubmit = (data) => {
-    console.log(data);
-    const { distrito, calle, sector, numeroEdificio } = data;
-    const direccion = { distrito, calle, sector, numeroEdificio };
-    const proveedor = { ...data, direccion };
-    mutation.mutate(proveedor);
-  };
+    const address = {
+      district: data.district,
+      street: data.street,
+      sector: data.sector,
+      buildingNumber: data.buildingNumber,
+      username: "SA",
+    };
 
+    const infoSupplier = {
+      typeSupplierId: data.typeSupplierId,
+      typeDocumentId: data.typeDocumentId,
+      document: data.document,
+      name: data.name,
+      typeServiceId: data.typeServiceId,
+      phone: data.phone,
+      email: data.email,
+      bankId: data.bankId,
+      bankOptionalId: data.bankOptionalid,
+      accountNumber: data.accountNumber,
+      accountNumberOptional: data.accountNumberOptional,
+      info: data.info,
+      username: "SA",
+    };
+
+    mutation.mutate({ infoSupplier, address });
+  };
+  if (mutation.isSuccess) alert("agregado");
   return (
     <>
       <Form className="form theme-form" onSubmit={handleSubmit(onSubmit)}>
@@ -51,7 +71,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomSelect
               label="Tipo de proveedor"
-              name="tipoProveedorId"
+              name="typeSupplierId"
               options={optionsTypeSupplier}
               register={register}
               errors={errors}
@@ -60,7 +80,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomSelect
               label="Tipo de documento"
-              name="tipoDocumentoId"
+              name="typeDocumentId"
               options={optionsTypeDocument}
               register={register}
               errors={errors}
@@ -69,7 +89,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomInput
               label="Documento"
-              name="documento"
+              name="document"
               isMasked
               mask={documentMask}
               control={control}
@@ -80,7 +100,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomInput
               label="Nombre / razón social"
-              name="nombre"
+              name="name"
               register={register}
               errors={errors}
             />
@@ -88,7 +108,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomSelect
               label="Tipo de servicio"
-              name="tipoServicioId"
+              name="typeServiceId"
               options={optionsSuppliers}
               register={register}
               errors={errors}
@@ -101,7 +121,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomInput
               label="Distrito"
-              name="distrito"
+              name="district"
               register={register}
               errors={errors}
             />
@@ -117,7 +137,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomInput
               label="Calle"
-              name="calle"
+              name="street"
               register={register}
               errors={errors}
             />
@@ -125,7 +145,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomInput
               label="Edif / Apto No"
-              name="numeroEdificio"
+              name="buildingNumber"
               register={register}
               errors={errors}
             />
@@ -133,7 +153,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomInput
               label="Telefono"
-              name="telefono"
+              name="phone"
               isMasked
               mask="(999)-999-9999"
               control={control}
@@ -157,7 +177,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomSelect
               label="Entidad bancaria"
-              name="entidadBancaria"
+              name="bankId"
               options={optionsBanks}
               register={register}
               errors={errors}
@@ -166,7 +186,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomInput
               label="Número de cuenta"
-              name="numeroCuenta"
+              name="accountNumber"
               register={register}
               errors={errors}
             />
@@ -176,7 +196,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomSelect
               label="Entidad bancaria opcional"
-              name="entidadBancariaOpcional"
+              name="bankOptionalId"
               options={optionsBanks}
               register={register}
               errors={errors}
@@ -186,7 +206,7 @@ const SupplierForm = () => {
           <Col sm="6" md="4" lg="3">
             <CustomInput
               label="Número de cuenta opcional"
-              name="numeroCuentaOpcional"
+              name="accountNumberOptional"
               register={register}
               errors={errors}
               isRequired={false}
@@ -199,7 +219,7 @@ const SupplierForm = () => {
           <Col sm="12">
             <CustomTextArea
               label="Información adicional"
-              name="infoAdicional"
+              name="info"
               isRequired={false}
               register={register}
               errors={errors}
