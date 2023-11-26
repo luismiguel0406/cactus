@@ -53,7 +53,7 @@ const SupplierForm = () => {
       phone: data.phone,
       email: data.email,
       bankId: data.bankId,
-      bankOptionalId: data.bankOptionalid,
+      bankOptionalId: data.bankOptionalId,
       accountNumber: data.accountNumber,
       accountNumberOptional: data.accountNumberOptional,
       info: data.info,
