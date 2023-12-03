@@ -8,6 +8,7 @@ import ButtonsSubmitCancel from "CommonElements/Forms/Common/ButtonsSubmitCancel
 import { useDrop } from "hooks/useDrop";
 import { useMutation } from "@tanstack/react-query";
 import { postData } from "Service";
+import { toast } from "react-toastify";
 
 const SupplierForm = () => {
   const {
@@ -18,11 +19,13 @@ const SupplierForm = () => {
     reset,
     watch,
   } = useForm();
+  const SANTO_DOMINGO = "32";
+  const optionSuppliers = useDrop("proveedores/tipoServicio");
+  const optionTypeSuppliers = useDrop("proveedores/tipoProveedor");
+  const optionTypeDocuments = useDrop("proveedores/tipoDocumento");
+  const optionBanks = useDrop("proveedores/banco");
+  const optionDistricts = useDrop("territorios/provincias");
 
-  const optionsSuppliers = useDrop("proveedores/tipoServicio");
-  const optionsTypeSupplier = useDrop("proveedores/tipoProveedor");
-  const optionsTypeDocument = useDrop("proveedores/tipoDocumento");
-  const optionsBanks = useDrop("proveedores/banco");
   const mutation = useMutation({
     mutationFn: (body) => postData("proveedores/proveedor", body),
   });
@@ -30,14 +33,14 @@ const SupplierForm = () => {
   const typeDocument = watch("typeDocumentId", 1);
 
   let documentMask = "";
-  const currentItem = optionsTypeDocument?.filter(
+  const currentItem = optionTypeDocuments?.filter(
     (item) => item.value === Number(typeDocument)
   );
   if (currentItem) documentMask = currentItem[0]?.mask;
 
   const onSubmit = (data) => {
     const address = {
-      district: data.district,
+      districtId: data.districtId,
       street: data.street,
       sector: data.sector,
       buildingNumber: data.buildingNumber,
@@ -62,7 +65,16 @@ const SupplierForm = () => {
 
     mutation.mutate({ infoSupplier, address });
   };
-  if (mutation.isSuccess) alert("agregado");
+
+  if (mutation.isSuccess) {
+    //reset();
+    toast.success(mutation?.data?.message, {
+      style: { color: "white" },
+    });
+  } else if (mutation.isError) {
+    toast.error(mutation?.data?.message, { style: { color: "white" } });
+  }
+
   return (
     <>
       <Form className="form theme-form" onSubmit={handleSubmit(onSubmit)}>
@@ -72,7 +84,7 @@ const SupplierForm = () => {
             <CustomSelect
               label="Tipo de proveedor"
               name="typeSupplierId"
-              options={optionsTypeSupplier}
+              options={optionTypeSuppliers}
               register={register}
               errors={errors}
             />
@@ -81,7 +93,7 @@ const SupplierForm = () => {
             <CustomSelect
               label="Tipo de documento"
               name="typeDocumentId"
-              options={optionsTypeDocument}
+              options={optionTypeDocuments}
               register={register}
               errors={errors}
             />
@@ -109,7 +121,7 @@ const SupplierForm = () => {
             <CustomSelect
               label="Tipo de servicio"
               name="typeServiceId"
-              options={optionsSuppliers}
+              options={optionSuppliers}
               register={register}
               errors={errors}
             />
@@ -119,9 +131,11 @@ const SupplierForm = () => {
         <h4>Contacto</h4>
         <Row>
           <Col sm="6" md="4" lg="3">
-            <CustomInput
+            <CustomSelect
               label="Distrito"
-              name="district"
+              name="districtId"
+              defaultValue={SANTO_DOMINGO}
+              options={optionDistricts}
               register={register}
               errors={errors}
             />
@@ -178,7 +192,7 @@ const SupplierForm = () => {
             <CustomSelect
               label="Entidad bancaria"
               name="bankId"
-              options={optionsBanks}
+              options={optionBanks}
               register={register}
               errors={errors}
             />
@@ -197,7 +211,7 @@ const SupplierForm = () => {
             <CustomSelect
               label="Entidad bancaria opcional"
               name="bankOptionalId"
-              options={optionsBanks}
+              options={optionBanks}
               register={register}
               errors={errors}
               isRequired={false}

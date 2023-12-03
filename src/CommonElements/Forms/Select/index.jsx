@@ -6,6 +6,7 @@ const CustomSelect = ({
   name,
   className = "",
   options = [],
+  defaultValue = "0",
   register,
   messageError = "Debes selecionar una opción valida",
   errors,
@@ -24,7 +25,7 @@ const CustomSelect = ({
             ? { border: "1px solid red" }
             : { border: "1px solid green" }
         }
-        defaultValue="0"
+        defaultValue={defaultValue}
         {...register(name, {
           validate: isRequired
             ? (value) => value !== "0" || messageError
