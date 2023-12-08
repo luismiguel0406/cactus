@@ -1,9 +1,15 @@
-import React, { Fragment, useState, useCallback, useMemo, useEffect} from "react";
+import React, {
+  Fragment,
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+} from "react";
 import differenceBy from "lodash/differenceBy";
 import { toast } from "react-toastify";
 import DataTable from "react-data-table-component";
 
-const CustomTable = ({ tableColumns, tableData, selectableRows = false }) => {
+const CustomTable = ({ columns, tableData, selectableRows = false }) => {
   const [data, setData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [toggleCleared, setToggleCleared] = useState(false);
@@ -11,10 +17,9 @@ const CustomTable = ({ tableColumns, tableData, selectableRows = false }) => {
     setSelectedRows(state.selectedRows);
   }, []);
 
-
-  useEffect(()=>{
-   setData(tableData);
-  },[tableData]);
+  useEffect(() => {
+    setData(tableData);
+  }, [tableData]);
 
   const contextActions = useMemo(() => {
     const handleDelete = () => {
@@ -44,7 +49,7 @@ const CustomTable = ({ tableColumns, tableData, selectableRows = false }) => {
         pagination
         className="datatables"
         data={data}
-        columns={tableColumns}
+        columns={columns}
         striped={true}
         center={true}
         selectableRows={selectableRows}
@@ -52,7 +57,7 @@ const CustomTable = ({ tableColumns, tableData, selectableRows = false }) => {
         contextActions={contextActions}
         onSelectedRowsChange={handleRowSelected}
         clearSelectedRows={toggleCleared}
-        highlightOnHover     
+        highlightOnHover
       />
     </Fragment>
   );

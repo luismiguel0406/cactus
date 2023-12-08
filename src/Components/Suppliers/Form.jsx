@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { postData } from "Service";
 import { toast } from "react-toastify";
 
-const SupplierForm = () => {
+const SupplierForm = ({ editData = {} }) => {
   const {
     register,
     handleSubmit,
@@ -26,7 +26,7 @@ const SupplierForm = () => {
   const optionBanks = useDrop("proveedores/banco");
   const optionDistricts = useDrop("territorios/provincias");
 
-  const mutation = useMutation({
+  const postSupplier = useMutation({
     mutationFn: (body) => postData("proveedores/proveedor", body),
   });
 
@@ -63,16 +63,16 @@ const SupplierForm = () => {
       username: "SA",
     };
 
-    mutation.mutate({ infoSupplier, address });
+    postSupplier.mutate({ infoSupplier, address });
   };
 
-  if (mutation.isSuccess) {
+  if (postSupplier.isSuccess) {
     //reset();
-    toast.success(mutation?.data?.message, {
+    toast.success(postSupplier?.data?.message, {
       style: { color: "white" },
     });
-  } else if (mutation.isError) {
-    toast.error(mutation?.data?.message, { style: { color: "white" } });
+  } else if (postSupplier.isError) {
+    toast.error(postSupplier?.data?.message, { style: { color: "white" } });
   }
 
   return (
