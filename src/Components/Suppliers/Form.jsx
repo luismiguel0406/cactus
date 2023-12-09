@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Col, Row, CardFooter } from "reactstrap";
 import CustomInput from "CommonElements/Forms/Input";
@@ -74,10 +74,18 @@ const SupplierForm = ({ editData = {} }) => {
   } else if (postSupplier.isError) {
     toast.error(postSupplier?.data?.message, { style: { color: "white" } });
   }
-
+  useEffect(() => {
+    if (Object.entries(editData)?.length > 0) {
+      reset(editData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editData]);
   return (
     <>
-      <Form className="form theme-form" onSubmit={handleSubmit(onSubmit)}>
+      <Form
+        className="form theme-form animate__animated animate__fadeInRight"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h4>Identificación fiscal</h4>
         <Row>
           <Col sm="6" md="4" lg="3">

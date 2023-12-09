@@ -2,7 +2,7 @@ import CustomTable from "CommonElements/Table";
 import React from "react";
 import { Button } from "reactstrap";
 
-const TableSuppliers = () => {
+const TableSuppliers = ({ tableData = [], selectedRow }) => {
   const columns = [
     {
       name: "id",
@@ -10,49 +10,58 @@ const TableSuppliers = () => {
       omit: true,
     },
     {
-      name: "document",
+      name: "Tipo de documento",
+      selector: ({ typeDocument }) => typeDocument.description,
+    },
+    {
+      name: "Documento",
       selector: ({ document }) => document,
     },
     {
-      name: "typeService",
-      selector: ({ typeService }) => typeService.description,
+      name: "Nombre/razon social",
+      selector: ({ name }) => name,
     },
     {
-      name: "phone",
-      selector: ({ phone }) => phone,
-    },
-    {
-      name: "email",
-      selector: ({ email }) => email,
-    },
-    {
-      name: "bank",
-      selector: ({ bank }) => bank.description,
-    },
-    {
-      name: "type supplier",
+      name: "Tipo",
       selector: ({ typeSupplier }) => typeSupplier.description,
     },
     {
-      name: "account Number",
+      name: "Tipo de servicio",
+      selector: ({ typeService }) => typeService.description,
+    },
+    {
+      name: "Telefono",
+      selector: ({ phone }) => phone,
+    },
+    {
+      name: "Email",
+      selector: ({ email }) => email,
+    },
+    {
+      name: "Banco",
+      selector: ({ bank }) => bank.description,
+    },
+
+    {
+      name: "Número de cuenta",
       selector: ({ accountNumber }) => accountNumber,
     },
     {
-      name: "account number optional",
-      selector: ({ info }) => info,
+      name: "Número de cuenta opcional",
+      selector: ({ accountNumberOptional }) => accountNumberOptional,
     },
     {
-      name: "info",
+      name: "Detalle",
       selector: ({ info }) => info,
-    },
-    {
-      name: "type document",
-      selector: ({ typeDocument }) => typeDocument.description,
     },
     {
       cell: (row) => (
         <>
-          <Button color="secondary" className="m-r-10 px-3" onClick={() => {}}>
+          <Button
+            color="secondary"
+            className="m-r-10 px-3"
+            onClick={() => selectedRow(row)}
+          >
             <i className="fa fa-edit" />
           </Button>
           <Button color="danger" className="m-r-10 px-3">
@@ -67,7 +76,7 @@ const TableSuppliers = () => {
     },
   ];
 
-  return <CustomTable tableData={[]} columns={columns} />;
+  return <CustomTable tableData={tableData} columns={columns} />;
 };
 
 export default TableSuppliers;
