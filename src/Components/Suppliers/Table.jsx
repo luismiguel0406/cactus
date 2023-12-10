@@ -6,12 +6,17 @@ const TableSuppliers = ({ tableData = [], selectedRow }) => {
   const columns = [
     {
       name: "id",
-      selector: (row) => row.id,
+      selector: ({ id }) => id,
       omit: true,
     },
     {
       name: "Tipo de documento",
       selector: ({ typeDocument }) => typeDocument.description,
+    },
+    {
+      name: "Tipo de documentoId",
+      selector: ({ typeDocumentId }) => typeDocumentId,
+      omit: true,
     },
     {
       name: "Documento",
@@ -22,12 +27,22 @@ const TableSuppliers = ({ tableData = [], selectedRow }) => {
       selector: ({ name }) => name,
     },
     {
-      name: "Tipo",
+      name: "Tipo proveedor",
       selector: ({ typeSupplier }) => typeSupplier.description,
+    },
+    {
+      name: "Tipo proveedorId",
+      selector: ({ typeSupplierId }) => typeSupplierId,
+      omit: true,
     },
     {
       name: "Tipo de servicio",
       selector: ({ typeService }) => typeService.description,
+    },
+    {
+      name: "Tipo servicioId",
+      selector: ({ typeServiceId }) => typeServiceId,
+      omit: true,
     },
     {
       name: "Telefono",
@@ -41,7 +56,11 @@ const TableSuppliers = ({ tableData = [], selectedRow }) => {
       name: "Banco",
       selector: ({ bank }) => bank.description,
     },
-
+    {
+      name: "BancoId",
+      selector: ({ bankId }) => bankId,
+      omit: true,
+    },
     {
       name: "Número de cuenta",
       selector: ({ accountNumber }) => accountNumber,

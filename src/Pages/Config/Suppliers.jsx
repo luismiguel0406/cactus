@@ -6,9 +6,8 @@ import TableSuppliers from "Components/Suppliers/Table";
 import { useGetData } from "hooks/useGetData";
 
 export const Suppliers = () => {
-  const { data } = useGetData("proveedores/proveedor");
+  const { data } = useGetData("suppliers/supplier");
 
-  //const [isEdit, setIsEdit] = useState(false);
   const [editData, setEditData] = useState({});
   const [showForm, setShowForm] = useState(false);
 

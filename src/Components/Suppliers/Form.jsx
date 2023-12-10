@@ -19,15 +19,15 @@ const SupplierForm = ({ editData = {} }) => {
     reset,
     watch,
   } = useForm();
-  const SANTO_DOMINGO = "32";
-  const optionSuppliers = useDrop("proveedores/tipoServicio");
-  const optionTypeSuppliers = useDrop("proveedores/tipoProveedor");
-  const optionTypeDocuments = useDrop("proveedores/tipoDocumento");
-  const optionBanks = useDrop("proveedores/banco");
-  const optionDistricts = useDrop("territorios/provincias");
+  const SANTO_DOMINGO = 32;
+  const optionTypeServices = useDrop("suppliers/typeService");
+  const optionTypeSuppliers = useDrop("suppliers/typeSupplier");
+  const optionTypeDocuments = useDrop("suppliers/typeDocument");
+  const optionBanks = useDrop("suppliers/bank");
+  const optionDistricts = useDrop("territories/provinces");
 
   const postSupplier = useMutation({
-    mutationFn: (body) => postData("proveedores/proveedor", body),
+    mutationFn: (body) => postData("suppliers/supplier", body),
   });
 
   const typeDocument = watch("typeDocumentId", 1);
@@ -75,11 +75,9 @@ const SupplierForm = ({ editData = {} }) => {
     toast.error(postSupplier?.data?.message, { style: { color: "white" } });
   }
   useEffect(() => {
-    if (Object.entries(editData)?.length > 0) {
-      reset(editData);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    reset(editData);
   }, [editData]);
+
   return (
     <>
       <Form
@@ -129,7 +127,7 @@ const SupplierForm = ({ editData = {} }) => {
             <CustomSelect
               label="Tipo de servicio"
               name="typeServiceId"
-              options={optionSuppliers}
+              options={optionTypeServices}
               register={register}
               errors={errors}
             />
