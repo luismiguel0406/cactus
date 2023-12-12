@@ -12,8 +12,9 @@ export const Suppliers = () => {
   const [showForm, setShowForm] = useState(false);
 
   const handleEdit = (rowValue) => {
-    setShowForm(true);
     setEditData(rowValue);
+    setShowForm(true);
+    console.log(rowValue);
   };
   return (
     <Fragment>

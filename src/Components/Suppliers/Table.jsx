@@ -74,6 +74,22 @@ const TableSuppliers = ({ tableData = [], selectedRow }) => {
       selector: ({ info }) => info,
     },
     {
+      name: "districtId",
+      selector: ({ address }) => address.districtId,
+    },
+    {
+      name: "street",
+      selector: ({ address }) => address.street,
+    },
+    {
+      name: "sector",
+      selector: ({ address }) => address.sector,
+    },
+    {
+      name: "buildingNumber",
+      selector: ({ address }) => address.buildingNumber,
+    },
+    {
       cell: (row) => (
         <>
           <Button

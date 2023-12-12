@@ -7,7 +7,7 @@ const CustomInput = ({
   label,
   name,
   className = "",
-  type = 'text',
+  type = "text",
   register,
   control = null,
   messageError = "",
@@ -17,7 +17,6 @@ const CustomInput = ({
   onClick,
   errors,
   isRequired = true,
-  ...rest
 }) => {
   let messageRequired =
     messageError === "" ? `${label} es requerido.` : messageError;
@@ -36,7 +35,6 @@ const CustomInput = ({
                 : { border: "1px solid green" }
             }
             className={`form-control ${className}`}
-            {...rest}
             {...register(name, {
               required: isRequired ? messageRequired : false,
             })}
@@ -61,10 +59,10 @@ const CustomInput = ({
             rules={{
               required: isRequired ? messageRequired : false,
             }}
-            render={({ field:{onChange} }) => (
+            render={({ field }) => (
               <InputMask
-                name={name} 
-                mask={mask} 
+                name={name}
+                mask={mask}
                 alwaysShowMask
                 className={`form-control ${className}`}
                 style={
@@ -72,7 +70,8 @@ const CustomInput = ({
                     ? { border: "1px solid red" }
                     : { border: "1px solid green" }
                 }
-                onChange={onChange}
+                {...field}
+                onChange={field.onChange}
               />
             )}
           />

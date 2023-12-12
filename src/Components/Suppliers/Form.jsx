@@ -44,7 +44,6 @@ const SupplierForm = ({ editData = {} }) => {
       street: data.street,
       sector: data.sector,
       buildingNumber: data.buildingNumber,
-      username: "SA",
     };
 
     const infoSupplier = {
@@ -60,10 +59,11 @@ const SupplierForm = ({ editData = {} }) => {
       accountNumber: data.accountNumber,
       accountNumberOptional: data.accountNumberOptional,
       info: data.info,
+      address,
       username: "SA",
     };
 
-    postSupplier.mutate({ infoSupplier, address });
+    postSupplier.mutate({ infoSupplier });
   };
 
   if (postSupplier.isSuccess) {
@@ -75,7 +75,14 @@ const SupplierForm = ({ editData = {} }) => {
     toast.error(postSupplier?.data?.message, { style: { color: "white" } });
   }
   useEffect(() => {
-    reset(editData);
+    const { address } = editData;
+    reset({
+      ...editData,
+      districtId: address.districtId,
+      sector: address.sector,
+      street: address.street,
+      buildingNumber: address.buildingNumber,
+    });
   }, [editData]);
 
   return (
