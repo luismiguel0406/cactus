@@ -15,20 +15,16 @@ export const http = axios.create({
 });
 
 export const getData = async (url) => {
-  try {
-    const response = await http.get(url);
-    const data = await response.data;
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
+  const { data } = await http.get(url);
+  return data;
 };
 
 export const postData = async (url, body) => {
-  try {
-    const response = await http.post(url, body);
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
+  const { data } = await http.post(url, body);
+  return data;
+};
+
+export const putData = async (url, body) => {
+  const { data } = await http.put(url, body);
+  return data;
 };

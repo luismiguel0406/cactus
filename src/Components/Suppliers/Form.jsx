@@ -1,34 +1,25 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Form, Col, Row, CardFooter } from "reactstrap";
+import React from "react";
+import { Form, Col, Row, CardFooter, Button } from "reactstrap";
 import CustomInput from "CommonElements/Forms/Input";
 import CustomSelect from "CommonElements/Forms/Select";
 import CustomTextArea from "CommonElements/Forms/Textarea";
-import ButtonsSubmitCancel from "CommonElements/Forms/Common/ButtonsSubmitCancel";
 import { useDrop } from "hooks/useDrop";
-import { useMutation } from "@tanstack/react-query";
-import { postData } from "Service";
-import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 
-const SupplierForm = ({ editData = {} }) => {
+const SupplierForm = ({ onSubmit, defaultValues, toggler }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
-    reset,
     watch,
-  } = useForm();
-  const SANTO_DOMINGO = 32;
+  } = useForm({ defaultValues });
+
   const optionTypeServices = useDrop("suppliers/typeService");
   const optionTypeSuppliers = useDrop("suppliers/typeSupplier");
   const optionTypeDocuments = useDrop("suppliers/typeDocument");
   const optionBanks = useDrop("suppliers/bank");
   const optionDistricts = useDrop("territories/provinces");
-
-  const postSupplier = useMutation({
-    mutationFn: (body) => postData("suppliers/supplier", body),
-  });
 
   const typeDocument = watch("typeDocumentId", 1);
 
@@ -38,57 +29,10 @@ const SupplierForm = ({ editData = {} }) => {
   );
   if (currentItem) documentMask = currentItem[0]?.mask;
 
-  const onSubmit = (data) => {
-    const address = {
-      districtId: data.districtId,
-      street: data.street,
-      sector: data.sector,
-      buildingNumber: data.buildingNumber,
-    };
-
-    const infoSupplier = {
-      typeSupplierId: data.typeSupplierId,
-      typeDocumentId: data.typeDocumentId,
-      document: data.document,
-      name: data.name,
-      typeServiceId: data.typeServiceId,
-      phone: data.phone,
-      email: data.email,
-      bankId: data.bankId,
-      bankOptionalId: data.bankOptionalId,
-      accountNumber: data.accountNumber,
-      accountNumberOptional: data.accountNumberOptional,
-      info: data.info,
-      address,
-      username: "SA",
-    };
-
-    postSupplier.mutate({ infoSupplier });
-  };
-
-  if (postSupplier.isSuccess) {
-    //reset();
-    toast.success(postSupplier?.data?.message, {
-      style: { color: "white" },
-    });
-  } else if (postSupplier.isError) {
-    toast.error(postSupplier?.data?.message, { style: { color: "white" } });
-  }
-  useEffect(() => {
-    const { address } = editData;
-    reset({
-      ...editData,
-      districtId: address.districtId,
-      sector: address.sector,
-      street: address.street,
-      buildingNumber: address.buildingNumber,
-    });
-  }, [editData]);
-
   return (
     <>
       <Form
-        className="form theme-form animate__animated animate__fadeInRight"
+        className="form theme-form animate__animated animate__fadeIn"
         onSubmit={handleSubmit(onSubmit)}
       >
         <h4>Identificación fiscal</h4>
@@ -147,7 +91,6 @@ const SupplierForm = ({ editData = {} }) => {
             <CustomSelect
               label="Distrito"
               name="districtId"
-              defaultValue={SANTO_DOMINGO}
               options={optionDistricts}
               register={register}
               errors={errors}
@@ -254,7 +197,12 @@ const SupplierForm = ({ editData = {} }) => {
           </Col>
         </Row>
         <CardFooter className="text-end">
-          <ButtonsSubmitCancel reset={reset} />
+          <Button color="primary" className="m-r-15" type="submit">
+            Guardar
+          </Button>
+          <Button color="light" onClick={toggler}>
+            Cancelar
+          </Button>
         </CardFooter>
       </Form>
     </>

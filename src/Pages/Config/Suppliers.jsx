@@ -1,21 +1,25 @@
 import React, { Fragment, useState } from "react";
 import { Breadcrumbs } from "../../AbstractElements";
 import { Button, Card, CardBody, Col, Container, Row } from "reactstrap";
-import SupplierForm from "../../Components/Suppliers/Form";
 import TableSuppliers from "Components/Suppliers/Table";
 import { useGetData } from "hooks/useGetData";
+import { AddSupplier } from "Components/Suppliers/AddSupplier";
+import { useModal } from "hooks/useModal";
+import EditSupplier from "Components/Suppliers/EditSupplier";
 
 export const Suppliers = () => {
   const { data } = useGetData("suppliers/supplier");
 
+  const [isOpenAdd, toggleAdd] = useModal();
+  const [isOpenEdit, toggleEdit] = useModal();
   const [editData, setEditData] = useState({});
-  const [showForm, setShowForm] = useState(false);
 
-  const handleEdit = (rowValue) => {
-    setEditData(rowValue);
-    setShowForm(true);
-    console.log(rowValue);
+  const handleSelectedRow = (rowData) => {
+    delete rowData.address;
+    toggleEdit();
+    setEditData(rowData);
   };
+
   return (
     <Fragment>
       <Breadcrumbs
@@ -27,38 +31,37 @@ export const Suppliers = () => {
         <Row>
           <Col sm="12">
             <Card>
-              <CardBody>
-                {!showForm ? (
-                  <Fragment>
-                    <Row>
-                      <Col sm="4">
-                        <Button
-                          color="primary"
-                          onClick={() => setShowForm(true)}
-                        >
-                          <i className="icofont icofont-ui-add"></i> Nuevo
-                          proveedor
-                        </Button>
-                      </Col>
-                    </Row>
-                    <br />
-                    <Row>
-                      <Col sm="12">
-                        <TableSuppliers
-                          tableData={data}
-                          selectedRow={handleEdit}
-                        />
-                      </Col>
-                    </Row>
-                  </Fragment>
-                ) : (
-                  <SupplierForm editData={editData} />
-                )}
+              <CardBody style={{ minHeight: "40rem" }}>
+                <Fragment>
+                  <Row>
+                    <Col sm="4">
+                      <Button color="primary" onClick={toggleAdd}>
+                        <i className="icofont icofont-ui-add"></i> Nuevo
+                        proveedor
+                      </Button>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col sm="12">
+                      <TableSuppliers
+                        tableData={data}
+                        selectedRow={handleSelectedRow}
+                      />
+                    </Col>
+                  </Row>
+                </Fragment>
               </CardBody>
             </Card>
           </Col>
         </Row>
       </Container>
+      <AddSupplier isOpen={isOpenAdd} toggler={toggleAdd} />
+      <EditSupplier
+        isOpen={isOpenEdit}
+        toggler={toggleEdit}
+        editData={editData}
+      />
     </Fragment>
   );
 };

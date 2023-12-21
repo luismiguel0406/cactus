@@ -90,20 +90,31 @@ const TableSuppliers = ({ tableData = [], selectedRow }) => {
       selector: ({ address }) => address.buildingNumber,
     },
     {
-      cell: (row) => (
-        <>
-          <Button
-            color="secondary"
-            className="m-r-10 px-3"
-            onClick={() => selectedRow(row)}
-          >
-            <i className="fa fa-edit" />
-          </Button>
-          <Button color="danger" className="m-r-10 px-3">
-            <i className="fa fa-trash-o" />
-          </Button>
-        </>
-      ),
+      cell: (row) => {
+        const { address } = row;
+        return (
+          <>
+            <Button
+              color="secondary"
+              className="m-r-10 px-3"
+              onClick={() =>
+                selectedRow({
+                  ...row,
+                  districtId: address.districtId,
+                  sector: address.sector,
+                  street: address.street,
+                  buildingNumber: address.buildingNumber,
+                })
+              }
+            >
+              <i className="fa fa-edit" />
+            </Button>
+            <Button color="danger" className="m-r-10 px-3">
+              <i className="fa fa-trash-o" />
+            </Button>
+          </>
+        );
+      },
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,

@@ -47,7 +47,7 @@ const CustomTable = ({ columns, tableData, selectableRows = false }) => {
     <Fragment>
       <DataTable
         pagination
-        className="datatables"
+        className="datatables animate__animated animate__fadeIn"
         data={data}
         columns={columns}
         striped={true}

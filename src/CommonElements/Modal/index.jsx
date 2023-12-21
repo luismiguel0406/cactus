@@ -9,6 +9,7 @@ const CommonModal = ({
   children,
   bodyClass,
   classNameModal,
+  fullScreen = false,
   hasCancelButton = false,
   hasSaveButton = false,
 }) => {
@@ -17,10 +18,14 @@ const CommonModal = ({
       isOpen={isOpen}
       toggle={toggler}
       size={size}
-      centered
+      fullscreen={fullScreen}
       className={classNameModal}
+      centered
+      scrollable
     >
-      <ModalHeader toggle={toggler}>{title}</ModalHeader>
+      <ModalHeader style={{ color: "green" }} toggle={toggler}>
+        {title}
+      </ModalHeader>
       <ModalBody className={bodyClass}>{children}</ModalBody>
       <ModalFooter>
         {hasCancelButton ? (
