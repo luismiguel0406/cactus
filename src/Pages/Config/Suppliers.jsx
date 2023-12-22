@@ -6,9 +6,15 @@ import { useGetData } from "hooks/useGetData";
 import { AddSupplier } from "Components/Suppliers/AddSupplier";
 import { useModal } from "hooks/useModal";
 import EditSupplier from "Components/Suppliers/EditSupplier";
+import { useDeleteMutation } from "hooks/useDeleteMutation";
 
 export const Suppliers = () => {
   const { data } = useGetData("suppliers/supplier");
+  const invalidatedQuery = "supplier";
+  const deleteSupplier = useDeleteMutation(
+    "suppliers/supplier",
+    invalidatedQuery
+  );
 
   const [isOpenAdd, toggleAdd] = useModal();
   const [isOpenEdit, toggleEdit] = useModal();
@@ -18,6 +24,10 @@ export const Suppliers = () => {
     delete rowData.address;
     toggleEdit();
     setEditData(rowData);
+  };
+
+  const handleDeleteRow = (id) => {
+    deleteSupplier.mutate(id);
   };
 
   return (
@@ -47,6 +57,7 @@ export const Suppliers = () => {
                       <TableSuppliers
                         tableData={data}
                         selectedRow={handleSelectedRow}
+                        deleteRow={handleDeleteRow}
                       />
                     </Col>
                   </Row>

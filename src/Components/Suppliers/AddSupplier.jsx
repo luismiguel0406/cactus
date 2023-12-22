@@ -9,7 +9,7 @@ const defaultValues = {
   typeSupplierId: "0",
   document: "",
   name: "",
-  districtId: 32, // Santo domiingo
+  districtId: 32, // Santo domingo
   street: "",
   buildingNumber: "",
   sector: "",
@@ -20,7 +20,8 @@ const defaultValues = {
   info: "",
 };
 export const AddSupplier = ({ isOpen, toggler }) => {
-  const postSupplier = usePostMutation("suppliers/supplier");
+  const invalidatedQuery = "supplier";
+  const postSupplier = usePostMutation("suppliers/supplier", invalidatedQuery);
 
   const onSubmit = (data) => {
     const address = {

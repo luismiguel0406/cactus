@@ -28,3 +28,8 @@ export const putData = async (url, body) => {
   const { data } = await http.put(url, body);
   return data;
 };
+
+export const deleteData = async (url) => {
+  const { data } = await http.delete(url);
+  return data;
+};

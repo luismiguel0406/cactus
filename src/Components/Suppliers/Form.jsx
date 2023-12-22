@@ -21,7 +21,7 @@ const SupplierForm = ({ onSubmit, defaultValues, toggler }) => {
   const optionBanks = useDrop("suppliers/bank");
   const optionDistricts = useDrop("territories/provinces");
 
-  const typeDocument = watch("typeDocumentId", 1);
+  const typeDocument = watch("typeDocumentId", 2);
 
   let documentMask = "";
   const currentItem = optionTypeDocuments?.filter(

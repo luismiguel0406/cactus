@@ -5,7 +5,11 @@ import { usePutMutation } from "hooks/usePutMutation";
 
 const EditSupplier = ({ isOpen, toggler, editData = {} }) => {
   const { id } = editData;
-  const editSupplier = usePutMutation(`suppliers/supplier/${id}`);
+  const invalidatedQuery = "supplier";
+  const editSupplier = usePutMutation(
+    `suppliers/supplier/${id}`,
+    invalidatedQuery
+  );
 
   const onSubmit = (data) => {
     const address = {

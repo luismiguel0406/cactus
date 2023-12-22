@@ -2,7 +2,7 @@ import CustomTable from "CommonElements/Table";
 import React from "react";
 import { Button } from "reactstrap";
 
-const TableSuppliers = ({ tableData = [], selectedRow }) => {
+const TableSuppliers = ({ tableData = [], selectedRow, deleteRow }) => {
   const columns = [
     {
       name: "id",
@@ -91,7 +91,7 @@ const TableSuppliers = ({ tableData = [], selectedRow }) => {
     },
     {
       cell: (row) => {
-        const { address } = row;
+        const { address, id } = row;
         return (
           <>
             <Button
@@ -109,7 +109,11 @@ const TableSuppliers = ({ tableData = [], selectedRow }) => {
             >
               <i className="fa fa-edit" />
             </Button>
-            <Button color="danger" className="m-r-10 px-3">
+            <Button
+              color="danger"
+              className="m-r-10 px-3"
+              onClick={() => deleteRow(id)}
+            >
               <i className="fa fa-trash-o" />
             </Button>
           </>

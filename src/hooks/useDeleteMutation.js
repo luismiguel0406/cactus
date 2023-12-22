@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postData } from "Service";
+import { deleteData } from "Service";
 import { toast } from "react-toastify";
 
-export const usePostMutation = (url, invalidatedQuery) => {
+export const useDeleteMutation = (url, invalidatedQuery) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: (body) => postData(url, body),
+    mutationFn: (id) => deleteData(`${url}/${id}`),
     onError: (data) => toast.error(data.error),
     onSuccess: (data) => {
       queryClient.invalidateQueries([invalidatedQuery]);
