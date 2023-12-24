@@ -7,9 +7,12 @@ import { AddSupplier } from "Components/Suppliers/AddSupplier";
 import { useModal } from "hooks/useModal";
 import EditSupplier from "Components/Suppliers/EditSupplier";
 import { useDeleteMutation } from "hooks/useDeleteMutation";
+import { confirmAlert } from "Components/shared/Alerts";
+import SweetAlert from "sweetalert2";
 
 export const Suppliers = () => {
   const { data } = useGetData("suppliers/supplier");
+
   const invalidatedQuery = "supplier";
   const deleteSupplier = useDeleteMutation(
     "suppliers/supplier",
@@ -27,7 +30,20 @@ export const Suppliers = () => {
   };
 
   const handleDeleteRow = (id) => {
-    deleteSupplier.mutate(id);
+    confirmAlert().then((result) => {
+      if (result.value) {
+        deleteSupplier.mutate(id);
+        if (deleteSupplier.isSuccess) {
+          SweetAlert.fire(
+            "Eliminado!",
+            "Tu elemento ha sido borrado.",
+            "success"
+          );
+        }
+      } else {
+        SweetAlert.fire("Uff", "Tu elemento esta seguro!", "info");
+      }
+    });
   };
 
   return (
@@ -44,7 +60,7 @@ export const Suppliers = () => {
               <CardBody style={{ minHeight: "40rem" }}>
                 <Fragment>
                   <Row>
-                    <Col sm="4">
+                    <Col xs="12" sm="4">
                       <Button color="primary" onClick={toggleAdd}>
                         <i className="icofont icofont-ui-add"></i> Nuevo
                         proveedor
@@ -52,15 +68,11 @@ export const Suppliers = () => {
                     </Col>
                   </Row>
                   <br />
-                  <Row>
-                    <Col sm="12">
-                      <TableSuppliers
-                        tableData={data}
-                        selectedRow={handleSelectedRow}
-                        deleteRow={handleDeleteRow}
-                      />
-                    </Col>
-                  </Row>
+                  <TableSuppliers
+                    tableData={data}
+                    selectedRow={handleSelectedRow}
+                    deleteRow={handleDeleteRow}
+                  />
                 </Fragment>
               </CardBody>
             </Card>

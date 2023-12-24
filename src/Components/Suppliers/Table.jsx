@@ -72,22 +72,27 @@ const TableSuppliers = ({ tableData = [], selectedRow, deleteRow }) => {
     {
       name: "Detalle",
       selector: ({ info }) => info,
+      omit: true,
     },
     {
       name: "districtId",
       selector: ({ address }) => address.districtId,
+      omit: true,
     },
     {
       name: "street",
       selector: ({ address }) => address.street,
+      omit: true,
     },
     {
       name: "sector",
       selector: ({ address }) => address.sector,
+      omit: true,
     },
     {
       name: "buildingNumber",
       selector: ({ address }) => address.buildingNumber,
+      omit: true,
     },
     {
       cell: (row) => {

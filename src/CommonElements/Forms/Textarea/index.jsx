@@ -21,7 +21,7 @@ const CustomTextArea = ({
       <textarea
         id={name}
         name={name}
-        placeholder="Escribe una pequeña descripcion aqui"
+        placeholder="Escribe una pequeña descripción aqui"
         className={`form-control ${className}`}
         style={
           errors[name]?.message

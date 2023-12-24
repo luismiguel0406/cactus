@@ -23,8 +23,8 @@ const CommonModal = ({
       centered
       scrollable
     >
-      <ModalHeader style={{ color: "green" }} toggle={toggler}>
-        {title}
+      <ModalHeader style={{ backgroundColor: "#24695c" }} toggle={toggler}>
+        <span style={{ color: "white" }}>{title} </span>
       </ModalHeader>
       <ModalBody className={bodyClass}>{children}</ModalBody>
       <ModalFooter>

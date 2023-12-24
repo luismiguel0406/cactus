@@ -6,7 +6,9 @@ export const useDeleteMutation = (url, invalidatedQuery) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (id) => deleteData(`${url}/${id}`),
-    onError: (data) => toast.error(data.error),
+    onError: (data) => {
+      return toast.error(data.error);
+    },
     onSuccess: (data) => {
       queryClient.invalidateQueries([invalidatedQuery]);
       toast.success(data.message, { theme: "light" });

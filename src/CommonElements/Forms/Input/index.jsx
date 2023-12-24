@@ -17,6 +17,7 @@ const CustomInput = ({
   onClick,
   errors,
   isRequired = true,
+  ...rest
 }) => {
   let messageRequired =
     messageError === "" ? `${label} es requerido.` : messageError;
@@ -38,6 +39,7 @@ const CustomInput = ({
             {...register(name, {
               required: isRequired ? messageRequired : false,
             })}
+            {...rest}
           />
           {iconClassName !== "" ? (
             <button
