@@ -1,14 +1,14 @@
 import React, { Fragment, useState } from "react";
 import { Breadcrumbs } from "../../AbstractElements";
-import { Button, Card, CardBody, Col, Container, Row } from "reactstrap";
-import TableSuppliers from "Components/Suppliers/Table";
+import TableSuppliers from "Components/config/Suppliers/Table";
 import { useGetData } from "hooks/useGetData";
-import { AddSupplier } from "Components/Suppliers/AddSupplier";
+import { AddSupplier } from "Components/config/Suppliers/AddSupplier";
 import { useModal } from "hooks/useModal";
-import EditSupplier from "Components/Suppliers/EditSupplier";
+import EditSupplier from "Components/config/Suppliers/EditSupplier";
 import { useDeleteMutation } from "hooks/useDeleteMutation";
 import { confirmAlert } from "Components/shared/Alerts";
 import SweetAlert from "sweetalert2";
+import MiniHeader from "Components/shared/MiniHeader";
 
 export const Suppliers = () => {
   const { data } = useGetData("suppliers/supplier");
@@ -53,32 +53,17 @@ export const Suppliers = () => {
         parent="Configuración"
         title="Proveedores"
       />
-      <Container fluid={true}>
-        <Row>
-          <Col sm="12">
-            <Card>
-              <CardBody style={{ minHeight: "40rem" }}>
-                <Fragment>
-                  <Row>
-                    <Col xs="12" sm="4">
-                      <Button color="primary" onClick={toggleAdd}>
-                        <i className="icofont icofont-ui-add"></i> Nuevo
-                        proveedor
-                      </Button>
-                    </Col>
-                  </Row>
-                  <br />
-                  <TableSuppliers
-                    tableData={data}
-                    selectedRow={handleSelectedRow}
-                    deleteRow={handleDeleteRow}
-                  />
-                </Fragment>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      <MiniHeader
+        fnButton={toggleAdd}
+        labelButton="Nuevo proveedor"
+        childTable={
+          <TableSuppliers
+            tableData={data}
+            selectedRow={handleSelectedRow}
+            deleteRow={handleDeleteRow}
+          />
+        }
+      />
       <AddSupplier isOpen={isOpenAdd} toggler={toggleAdd} />
       <EditSupplier
         isOpen={isOpenEdit}

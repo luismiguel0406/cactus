@@ -42,17 +42,9 @@ export const MENUITEMS = [
       {
         title: "Cuentas Contables",
         icon: BookOpen,
-        type: "sub",
+        type: "link",
         active: false,
-        children: [
-          {
-            title: "Grupo cuentas",
-            icon: UserPlus,
-            type: "exteral_link",
-            path: `cuentas-contables`,
-            active: true,
-          },
-        ],
+        path: `cuentas-contables`,
       },
       {
         title: "Empresa",

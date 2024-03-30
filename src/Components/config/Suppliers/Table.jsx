@@ -131,7 +131,17 @@ const TableSuppliers = ({ tableData = [], selectedRow, deleteRow }) => {
     },
   ];
 
-  return <CustomTable tableData={tableData} columns={columns} />;
+  return (
+    <CustomTable
+      tableData={tableData}
+      columns={columns}
+      searchParams={{
+        placeholder: "Busca por nombre / razon social o documento.",
+        prop1: "name",
+        prop2: "document",
+      }}
+    />
+  );
 };
 
 export default TableSuppliers;

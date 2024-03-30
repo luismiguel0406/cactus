@@ -4,7 +4,12 @@ import { toast } from "react-toastify";
 import DataTable from "react-data-table-component";
 import { Col, InputGroup, Row } from "reactstrap";
 
-const CustomTable = ({ columns, tableData = [], selectableRows = false }) => {
+const CustomTable = ({
+  columns,
+  tableData = [],
+  selectableRows = false,
+  searchParams = {},
+}) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [toggleCleared, setToggleCleared] = useState(false);
   const [searchCriteria, setSearchCriteria] = useState("");
@@ -17,10 +22,15 @@ const CustomTable = ({ columns, tableData = [], selectableRows = false }) => {
     setSearchCriteria(e.target.value);
   };
 
-  const filteredData = tableData.filter(
+  //cambiar item.name y item.document por las props que corresponden
+  const filteredData = tableData?.filter(
     (item) =>
-      item.name.toLowerCase().includes(searchCriteria.toLowerCase()) ||
-      item.document.toLowerCase().includes(searchCriteria.toLowerCase())
+      item[searchParams?.prop1]
+        .toLowerCase()
+        .includes(searchCriteria.toLowerCase()) ||
+      item[searchParams?.prop2]
+        .toLowerCase()
+        .includes(searchCriteria.toLowerCase())
   );
   const contextActions = useMemo(() => {
     const handleDelete = () => {
@@ -64,7 +74,7 @@ const CustomTable = ({ columns, tableData = [], selectableRows = false }) => {
               onChange={handleSearch}
               style={{ border: "1px solid green" }}
               className={`form-control`}
-              placeholder="Busca por nombre / razon social o documento."
+              placeholder={searchParams?.placeholder}
             />
             <button
               className="btn btn-primary"

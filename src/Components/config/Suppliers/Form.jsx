@@ -1,10 +1,11 @@
 import React from "react";
-import { Form, Col, Row, CardFooter, Button } from "reactstrap";
+import { Form, Col, Row } from "reactstrap";
 import CustomInput from "CommonElements/Forms/Input";
 import CustomSelect from "CommonElements/Forms/Select";
 import CustomTextArea from "CommonElements/Forms/Textarea";
 import { useDrop } from "hooks/useDrop";
 import { useForm } from "react-hook-form";
+import SaveCancelButton from "Components/shared/SaveCancelButton";
 
 const SupplierForm = ({ onSubmit, defaultValues, toggler }) => {
   const {
@@ -196,14 +197,7 @@ const SupplierForm = ({ onSubmit, defaultValues, toggler }) => {
             />
           </Col>
         </Row>
-        <CardFooter className="text-end">
-          <Button color="primary" className="m-r-15" type="submit">
-            Guardar
-          </Button>
-          <Button color="light" onClick={toggler}>
-            Cancelar
-          </Button>
-        </CardFooter>
+        <SaveCancelButton toggler={toggler} />
       </Form>
     </>
   );
