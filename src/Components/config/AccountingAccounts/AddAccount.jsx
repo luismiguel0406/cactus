@@ -4,7 +4,7 @@ import AccountingAccountsForm from "./Form";
 import { usePostMutation } from "hooks/usePostMutation";
 
 const defaultValues = {
-  currencyId: "1",
+  currencyId: 1,
   description: "",
   accountingGroupId: "0",
   accountNumber: "",
@@ -24,6 +24,7 @@ const AddAccount = ({ isOpen, toggler }) => {
       description,
       accountingGroupId,
       accountNumber,
+      username: "SA",
     };
     postAccounts.mutate(account);
     toggler();

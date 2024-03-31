@@ -10,7 +10,8 @@ export const useDrop = (url) => {
   const options = data?.map((item) => ({
     value: item.id,
     label: item.description,
-    mask: item?.mask,
+    mask: item?.mask, // mascara documento de identidad
+    accountNumber: item?.accountingGroup?.accountNumber, // inicio para cuentas contables
   }));
   return options;
 };

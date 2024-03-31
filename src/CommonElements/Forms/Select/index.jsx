@@ -11,6 +11,7 @@ const CustomSelect = ({
   messageError = "Debes selecionar una opción valida",
   errors,
   isRequired = true,
+  ...rest
 }) => {
   return (
     <FormGroup>
@@ -30,6 +31,7 @@ const CustomSelect = ({
             ? (value) => value !== "0" || messageError
             : null,
         })}
+        {...rest}
       >
         <option value="0">Selecciona una opción</option>
         {options?.map(({ value, label }) => (

@@ -23,7 +23,16 @@ const AccountingAccountsForm = ({ onSubmit, defaultValues, toggler }) => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Row>
-          <Col sm="6" md="4" lg="3">
+          <Col sm="12" md="3" lg="3">
+            <CustomSelect
+              label="Moneda"
+              name="currencyId"
+              options={optionsCurrency}
+              register={register}
+              errors={errors}
+            />
+          </Col>
+          <Col sm="12" md="9" lg="9">
             <CustomSelect
               label="Grupo contable"
               name="accountingGroupId"
@@ -32,18 +41,8 @@ const AccountingAccountsForm = ({ onSubmit, defaultValues, toggler }) => {
               errors={errors}
             />
           </Col>
-          <Col sm="6" md="4" lg="3">
-            <CustomSelect
-              label="Moneda"
-              name="currencyId"
-              options={optionsCurrency}
-              defaultValue="1"
-              register={register}
-              errors={errors}
-              disabled
-            />
-          </Col>
-          <Col sm="6" md="4" lg="3">
+
+          <Col sm="12" md="3" lg="3">
             <CustomInput
               label="No. Cuenta"
               name="accountNumber"
@@ -51,7 +50,7 @@ const AccountingAccountsForm = ({ onSubmit, defaultValues, toggler }) => {
               errors={errors}
             />
           </Col>
-          <Col sm="6" md="4" lg="3">
+          <Col sm="12" md="9" lg="9">
             <CustomInput
               label="Descripcion"
               name="description"
