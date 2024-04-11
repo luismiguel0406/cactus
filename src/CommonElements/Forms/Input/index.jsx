@@ -17,6 +17,7 @@ const CustomInput = ({
   onClick,
   errors,
   isRequired = true,
+  otherRules = {},
   ...rest
 }) => {
   let messageRequired =
@@ -38,6 +39,7 @@ const CustomInput = ({
             className={`form-control ${className}`}
             {...register(name, {
               required: isRequired ? messageRequired : false,
+              ...otherRules,
             })}
             {...rest}
           />
@@ -60,6 +62,7 @@ const CustomInput = ({
             control={control}
             rules={{
               required: isRequired ? messageRequired : false,
+              ...otherRules,
             }}
             render={({ field }) => (
               <InputMask

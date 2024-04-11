@@ -11,10 +11,15 @@ const AccountingAccountsForm = ({ onSubmit, defaultValues, toggler }) => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({ defaultValues });
 
   const optionsAccountingGroup = useDrop("accounts/accountingGroups");
   const optionsCurrency = useDrop("invoice/currency");
+  let accountingGroupSelected = watch("accountingGroupId", null);
+  const { accountNumber } = optionsAccountingGroup?.filter(
+    (i) => i.id === accountingGroupSelected
+  );
 
   return (
     <>
@@ -47,6 +52,12 @@ const AccountingAccountsForm = ({ onSubmit, defaultValues, toggler }) => {
               label="No. Cuenta"
               name="accountNumber"
               register={register}
+              otherRules={{
+                pattern: {
+                  value: `/^${accountNumber}/`,
+                  message: `Debe iniciar con ${accountNumber}.`,
+                },
+              }}
               errors={errors}
             />
           </Col>
